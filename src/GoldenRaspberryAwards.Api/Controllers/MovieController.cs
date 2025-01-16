@@ -37,14 +37,14 @@ namespace GoldenRaspberryAwards.Api.Controllers
                 await file.CopyToAsync(stream);
                 stream.Position = 0;
 
-                var csvProcessor = new CsvProcessor<Movie, CsvMovie>(/* validador e notificador */);
-                var movies = await csvProcessor.ProcessCsvAsync(stream);
+                //var csvProcessor = new CsvProcessor<Movie, CsvMovie>(/* validador e notificador */);
+                //var movies = await csvProcessor.ProcessCsvAsync(stream);
 
-                if (movies.Any())
-                {
-                    _context.Movies.AddRange(movies);
-                    await _context.SaveChangesAsync();
-                }
+                //if (movies.Any())
+                //{
+                //    _context.Movies.AddRange(movies);
+                //    await _context.SaveChangesAsync();
+                //}
             }
         }
     }
