@@ -1,0 +1,76 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35521.163
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01 - Application", "01 - Application", "{B349C81E-7204-4CFE-B230-5BFB2233FB38}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{805AC956-6D6F-405B-AB82-DE162DB29520}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02 - Domain", "02 - Domain", "{03E0D316-86EF-46AA-9363-0A59E9725AAF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{CF2F8A77-C747-4808-B055-346C119939AA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoldenRaspberryAwards.Api", "src\GoldenRaspberryAwards.Api\GoldenRaspberryAwards.Api.csproj", "{C2F6B517-D451-48DA-860D-B8947B630FF2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03 - Service", "03 - Service", "{F2966719-EE90-4456-8270-CEA3EE66B81A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04 - Infra", "04 - Infra", "{EB03555A-0C04-4BF4-A9D1-D325D8564D11}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{ACFEA4EE-404A-4327-8E43-F00E85E2A2C5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoldenRaspberryAwards.Core", "src\GoldenRaspberryAwards.Core\GoldenRaspberryAwards.Core.csproj", "{0AF5AD84-96E1-498E-BE6D-915F488407E1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoldenRaspberryAwards.Infrastructure", "src\GoldenRaspberryAwards.Infrastructure\GoldenRaspberryAwards.Infrastructure.csproj", "{E2F7DB97-BAA5-43A1-A9B2-96CADA2E8ECA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Loader Services", "Loader Services", "{5089A5F6-025D-4BD1-85C8-FF8941781C75}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CsvDataLoader.Service", "src\CsvDataLoader.Service\CsvDataLoader.Service.csproj", "{A7C39237-97B8-44D4-A4E2-F0A16EF5FEE9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{27D678AE-AD78-43FD-B938-08E5C908E088}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoldenRaspberryAwards.SharedServices", "src\GoldenRaspberryAwards.SharedServices\GoldenRaspberryAwards.SharedServices.csproj", "{2E82C546-5B0A-4B89-BBE8-972559BEE200}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C2F6B517-D451-48DA-860D-B8947B630FF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2F6B517-D451-48DA-860D-B8947B630FF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2F6B517-D451-48DA-860D-B8947B630FF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2F6B517-D451-48DA-860D-B8947B630FF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0AF5AD84-96E1-498E-BE6D-915F488407E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AF5AD84-96E1-498E-BE6D-915F488407E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AF5AD84-96E1-498E-BE6D-915F488407E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AF5AD84-96E1-498E-BE6D-915F488407E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2F7DB97-BAA5-43A1-A9B2-96CADA2E8ECA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2F7DB97-BAA5-43A1-A9B2-96CADA2E8ECA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2F7DB97-BAA5-43A1-A9B2-96CADA2E8ECA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2F7DB97-BAA5-43A1-A9B2-96CADA2E8ECA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7C39237-97B8-44D4-A4E2-F0A16EF5FEE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7C39237-97B8-44D4-A4E2-F0A16EF5FEE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7C39237-97B8-44D4-A4E2-F0A16EF5FEE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7C39237-97B8-44D4-A4E2-F0A16EF5FEE9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E82C546-5B0A-4B89-BBE8-972559BEE200}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E82C546-5B0A-4B89-BBE8-972559BEE200}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E82C546-5B0A-4B89-BBE8-972559BEE200}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E82C546-5B0A-4B89-BBE8-972559BEE200}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{805AC956-6D6F-405B-AB82-DE162DB29520} = {B349C81E-7204-4CFE-B230-5BFB2233FB38}
+		{CF2F8A77-C747-4808-B055-346C119939AA} = {03E0D316-86EF-46AA-9363-0A59E9725AAF}
+		{C2F6B517-D451-48DA-860D-B8947B630FF2} = {805AC956-6D6F-405B-AB82-DE162DB29520}
+		{ACFEA4EE-404A-4327-8E43-F00E85E2A2C5} = {EB03555A-0C04-4BF4-A9D1-D325D8564D11}
+		{0AF5AD84-96E1-498E-BE6D-915F488407E1} = {CF2F8A77-C747-4808-B055-346C119939AA}
+		{E2F7DB97-BAA5-43A1-A9B2-96CADA2E8ECA} = {ACFEA4EE-404A-4327-8E43-F00E85E2A2C5}
+		{5089A5F6-025D-4BD1-85C8-FF8941781C75} = {F2966719-EE90-4456-8270-CEA3EE66B81A}
+		{A7C39237-97B8-44D4-A4E2-F0A16EF5FEE9} = {5089A5F6-025D-4BD1-85C8-FF8941781C75}
+		{27D678AE-AD78-43FD-B938-08E5C908E088} = {F2966719-EE90-4456-8270-CEA3EE66B81A}
+		{2E82C546-5B0A-4B89-BBE8-972559BEE200} = {27D678AE-AD78-43FD-B938-08E5C908E088}
+	EndGlobalSection
+EndGlobal
