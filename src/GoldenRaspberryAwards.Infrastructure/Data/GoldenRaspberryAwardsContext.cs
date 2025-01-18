@@ -7,6 +7,7 @@ namespace GoldenRaspberryAwards.Infrastructure.Data
     public class GoldenRaspberryAwardsContext : DbContext
     {
         public GoldenRaspberryAwardsContext(DbContextOptions<GoldenRaspberryAwardsContext> options) : base(options) { }
+
         public DbSet<Movie> Movies { get; set; }
         public DbSet<Producer> Producers { get; set; }
         public DbSet<MovieProducer> MovieProducers { get; set; }
