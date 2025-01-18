@@ -1,9 +1,13 @@
 ﻿using CsvHelper;
 using CsvHelper.Configuration;
 using GoldenRaspberryAwards.Core.Interfaces;
+using GoldenRaspberryAwards.Core.Interfaces.Notifications;
+using GoldenRaspberryAwards.Core.Interfaces.Services;
 using System.Globalization;
 
-public class CsvProcessor<T, TCsv> : ICsvProcessor<T>
+namespace GoldenRaspberryAwards.CsvDataLoader.Services;
+
+public class CsvProcessorService<T, TCsv> : ICsvProcessorService<T>
     where T : class
     where TCsv : class, new()
 {
@@ -11,7 +15,7 @@ public class CsvProcessor<T, TCsv> : ICsvProcessor<T>
     private readonly INotifier _notifier;
     private readonly Func<TCsv, T> _mapper;
 
-    public CsvProcessor(IEntityValidator<T> validator, INotifier notifier, Func<TCsv, T> mapper)
+    public CsvProcessorService(IEntityValidator<T> validator, INotifier notifier, Func<TCsv, T> mapper)
     {
         _validator = validator ?? throw new ArgumentNullException(nameof(validator));
         _notifier = notifier ?? throw new ArgumentNullException(nameof(notifier));

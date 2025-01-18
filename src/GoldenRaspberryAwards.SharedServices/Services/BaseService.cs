@@ -1,9 +1,9 @@
 ﻿using FluentValidation;
-using GoldenRaspberryAwards.Core.Interfaces;
+using GoldenRaspberryAwards.Core.Interfaces.Notifications;
 using GoldenRaspberryAwards.Core.Model;
 using Microsoft.EntityFrameworkCore;
 
-namespace GameStore.SharedServices.Services;
+namespace GoldenRaspberryAwards.SharedServices.Services;
 
 public class BaseService
 {
