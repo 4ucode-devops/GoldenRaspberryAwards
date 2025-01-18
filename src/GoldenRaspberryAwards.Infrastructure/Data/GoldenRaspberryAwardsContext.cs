@@ -15,7 +15,6 @@ namespace GoldenRaspberryAwards.Infrastructure.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // Aplicando as configurações de mapeamento
             modelBuilder.ApplyConfiguration(new MovieMapping());
             modelBuilder.ApplyConfiguration(new ProducerMapping());
             modelBuilder.ApplyConfiguration(new MovieProducerMapping());

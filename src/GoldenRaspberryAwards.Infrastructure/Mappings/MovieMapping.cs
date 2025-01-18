@@ -12,7 +12,7 @@ namespace GoldenRaspberryAwards.Infrastructure.Mappings
             builder.Property(m => m.Title).IsRequired().HasMaxLength(255);
             builder.Property(m => m.Studios).HasMaxLength(255);
             builder.Property(m => m.Year).IsRequired();
-            builder.Property(m => m.IsWinner).HasDefaultValue(false);
+            builder.Property(m => m.IsWinner).IsRequired().HasMaxLength(5);
 
             builder.HasMany(m => m.MovieProducers)
                    .WithOne(mp => mp.Movie)
