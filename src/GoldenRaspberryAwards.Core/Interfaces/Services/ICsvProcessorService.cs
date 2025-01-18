@@ -1,6 +1,7 @@
-﻿namespace GoldenRaspberryAwards.Core.Interfaces.Services;
-
-public interface ICsvProcessorService<T> where T : class
+﻿namespace GoldenRaspberryAwards.Core.Interfaces.Services
 {
-    Task<List<T>> ProcessCsvAsync(string filePath);
+    public interface ICsvProcessorService<T> where T : class
+    {
+        Task<List<T>> ProcessCsvAsync(string filePath);
+    }
 }
