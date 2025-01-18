@@ -1,8 +1,8 @@
-﻿using GoldenRaspberryAwards.Core.Enum;
+﻿using FluentValidation.Results;
+using GoldenRaspberryAwards.Core.Enum;
 using GoldenRaspberryAwards.Core.Notifications;
-using System.ComponentModel.DataAnnotations;
 
-namespace GoldenRaspberryAwards.Core.Interfaces;
+namespace GoldenRaspberryAwards.Core.Interfaces.Notifications;
 
 public interface INotifier
 {

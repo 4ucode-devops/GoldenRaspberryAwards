@@ -1,27 +1,15 @@
-using GoldenRaspberryAwards.Infrastructure.Data;
-using Microsoft.EntityFrameworkCore;
+using Asp.Versioning.ApiExplorer;
+using GoldenRaspberryAwards.Api.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configuração para usar SQLite
-builder.Services.AddDbContext<GoldenRaspberryAwardsContext>(options =>
-    options.UseSqlite("Data Source=GoldenRaspberryAwards.db"));
-
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+var apiSettings = new ApiSettings();
+apiSettings.ConfigureServices(builder.Services, builder.Configuration, builder.Environment);
 
 var app = builder.Build();
 
-// Configuração do Swagger
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+var apiVersionDescriptionProvider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
 
-app.UseHttpsRedirection();
-app.UseAuthorization();
-app.MapControllers();
+apiSettings.ConfigurePipeline(app, app.Environment, apiVersionDescriptionProvider);
 
 app.Run();

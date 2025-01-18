@@ -1,5 +1,5 @@
 ﻿using GoldenRaspberryAwards.Core.Enum;
-using GoldenRaspberryAwards.Core.Interfaces;
+using GoldenRaspberryAwards.Core.Interfaces.Notifications;
 using GoldenRaspberryAwards.Core.Notifications;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
