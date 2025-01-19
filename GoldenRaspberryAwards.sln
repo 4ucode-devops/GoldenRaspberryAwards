@@ -31,6 +31,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{27D678
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoldenRaspberryAwards.SharedServices", "src\GoldenRaspberryAwards.SharedServices\GoldenRaspberryAwards.SharedServices.csproj", "{2E82C546-5B0A-4B89-BBE8-972559BEE200}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Identity", "Identity", "{0A1866FB-A528-41E7-AE16-5E23EB48BF59}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoldenRaspberryAwards.Identity", "src\GoldenRaspberryAwards.Identity\GoldenRaspberryAwards.Identity.csproj", "{1E8A9A16-051B-4132-A6D6-C2FB03A13B12}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +61,10 @@ Global
 		{2E82C546-5B0A-4B89-BBE8-972559BEE200}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E82C546-5B0A-4B89-BBE8-972559BEE200}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E82C546-5B0A-4B89-BBE8-972559BEE200}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E8A9A16-051B-4132-A6D6-C2FB03A13B12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E8A9A16-051B-4132-A6D6-C2FB03A13B12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E8A9A16-051B-4132-A6D6-C2FB03A13B12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E8A9A16-051B-4132-A6D6-C2FB03A13B12}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -72,6 +80,8 @@ Global
 		{A7C39237-97B8-44D4-A4E2-F0A16EF5FEE9} = {5089A5F6-025D-4BD1-85C8-FF8941781C75}
 		{27D678AE-AD78-43FD-B938-08E5C908E088} = {F2966719-EE90-4456-8270-CEA3EE66B81A}
 		{2E82C546-5B0A-4B89-BBE8-972559BEE200} = {27D678AE-AD78-43FD-B938-08E5C908E088}
+		{0A1866FB-A528-41E7-AE16-5E23EB48BF59} = {F2966719-EE90-4456-8270-CEA3EE66B81A}
+		{1E8A9A16-051B-4132-A6D6-C2FB03A13B12} = {0A1866FB-A528-41E7-AE16-5E23EB48BF59}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {26A5242F-B639-4A2F-A008-7F2797F884A6}

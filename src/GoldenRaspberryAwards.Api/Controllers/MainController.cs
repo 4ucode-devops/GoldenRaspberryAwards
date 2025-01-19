@@ -1,22 +1,30 @@
 ﻿using GoldenRaspberryAwards.Core.Enum;
+using GoldenRaspberryAwards.Core.Interfaces;
 using GoldenRaspberryAwards.Core.Interfaces.Notifications;
 using GoldenRaspberryAwards.Core.Notifications;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace GameStore.API.Controllers;
+namespace GoldenRaspberryAwards.Api.Controllers;
 
 [ApiController]
 public abstract class MainController : Controller
 {
     protected readonly INotifier _notifier;
+    protected readonly IAspNetUser _user;
 
     protected Guid UserId { get; set; }
     protected string UserEmail { get; set; }
 
-    protected MainController(INotifier notifier)
+    protected MainController(INotifier notifier, IAspNetUser user)
     {
         _notifier = notifier;
+
+        if (user.IsAuthenticated())
+        {
+            UserId = user.GetUserId();
+            UserEmail = user.GetUserEmail();
+        }
     }
 
     protected ActionResult CustomResponse(object? result = null, int? statusCode = null)
