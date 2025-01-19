@@ -55,7 +55,7 @@ public class ApiSettings
         services.AddApiVersioningConfiguration();
         services.AddSwaggerConfig();
         services.AddHttpContextAccessor();
-        //services.AddIdentityConfig(configuration);
+        services.AddIdentityConfig(configuration);
         services.AddAuthorization();
         services.AddAuthentication();
     }

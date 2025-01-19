@@ -23,7 +23,6 @@ public static class SwaggerConfig
     private static void ConfigureSwaggerOperations(SwaggerGenOptions options)
     {
         options.OperationFilter<SwaggerDefaultValues>();
-        options.OperationFilter<FileUploadOperation>();
     }
 
     private static void ConfigureSwaggerSecurity(SwaggerGenOptions options)
@@ -130,44 +129,24 @@ public class SwaggerDefaultValues : IOperationFilter
 
         foreach (var parameter in operation.Parameters)
         {
-            var description = apiDescription.ParameterDescriptions.First(p => p.Name == parameter.Name);
+            var description = apiDescription.ParameterDescriptions
+                .FirstOrDefault(p => p.Name == parameter.Name);
 
-            parameter.Description ??= description.ModelMetadata.Description;
+            if (description == null)
+                continue;
+
+            parameter.Description ??= description.ModelMetadata?.Description;
 
             if (parameter.Schema.Default == null && description.DefaultValue != null)
             {
-                var json = JsonSerializer.Serialize(description.DefaultValue, description.ModelMetadata.ModelType);
+                var json = JsonSerializer.Serialize(
+                    description.DefaultValue,
+                    description.ModelMetadata?.ModelType
+                );
                 parameter.Schema.Default = OpenApiAnyFactory.CreateFromJson(json);
             }
 
             parameter.Required |= description.IsRequired;
-        }
-    }
-}
-
-public class FileUploadOperation : IOperationFilter
-{
-    public void Apply(OpenApiOperation operation, OperationFilterContext context)
-    {
-        var fileParameters = context.ApiDescription.ParameterDescriptions
-            .Where(p => p.ModelMetadata.ContainerType == typeof(IFormFile) || p.ModelMetadata.ContainerType == typeof(IEnumerable<IFormFile>))
-            .ToList();
-
-        foreach (var fileParameter in fileParameters)
-        {
-            var mediaType = new OpenApiMediaType
-            {
-                Schema = new OpenApiSchema
-                {
-                    Type = "string",
-                    Format = "binary"
-                }
-            };
-
-            operation.RequestBody = new OpenApiRequestBody
-            {
-                Content = { ["multipart/form-data"] = mediaType }
-            };
         }
     }
 }

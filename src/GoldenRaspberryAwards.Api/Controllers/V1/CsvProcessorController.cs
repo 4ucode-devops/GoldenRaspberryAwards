@@ -1,12 +1,12 @@
 ﻿using Asp.Versioning;
-using GameStore.API.Controllers;
+using GoldenRaspberryAwards.Api.Dtos;
+using GoldenRaspberryAwards.Core.Interfaces;
 using GoldenRaspberryAwards.Core.Interfaces.Notifications;
 using GoldenRaspberryAwards.Core.Interfaces.Services;
 using GoldenRaspberryAwards.Core.Model;
 using GoldenRaspberryAwards.Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace GoldenRaspberryAwards.Api.Controllers.V1;
 
@@ -19,17 +19,19 @@ public class CsvProcessorController : MainController
 
     public CsvProcessorController(
         INotifier notifier,
+        IAspNetUser user,
         ICsvProcessorService<Movie> csvProcessorService,
-        GoldenRaspberryAwardsContext dbContext) : base(notifier)
+        GoldenRaspberryAwardsContext dbContext) : base(notifier, user)
     {
         _csvProcessorService = csvProcessorService;
         _dbContext = dbContext;
     }
 
     [HttpPost("csv")]
-    public async Task<IActionResult> ProcessCsv([FromForm] IFormFile file)
+    [Consumes("multipart/form-data")]
+    public async Task<IActionResult> ProcessCsv(CsvUploadInput input)
     {
-        if (file == null || file.Length == 0)
+        if (input.File == null || input.File.Length == 0)
         {
             NotifyError("Arquivo CSV é obrigatório.");
             return CustomResponse();
@@ -37,10 +39,10 @@ public class CsvProcessorController : MainController
 
         try
         {
-            var filePath = Path.Combine(Path.GetTempPath(), file.FileName);
+            var filePath = Path.Combine(Path.GetTempPath(), input.File.FileName);
             using (var stream = new FileStream(filePath, FileMode.Create))
             {
-                await file.CopyToAsync(stream);
+                await input.File.CopyToAsync(stream);
             }
 
             var movies = await _csvProcessorService.ProcessCsvAsync(filePath);
@@ -54,7 +56,7 @@ public class CsvProcessorController : MainController
         }
     }
 
-    public async Task<List<Movie>> ProcessCsvAsync(string filePath)
+    private async Task<List<Movie>> ProcessCsvAsync(string filePath)
     {
         var movies = new List<Movie>();
 
