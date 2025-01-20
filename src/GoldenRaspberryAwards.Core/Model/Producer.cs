@@ -1,9 +1,7 @@
-﻿namespace GoldenRaspberryAwards.Core.Model
+﻿namespace GoldenRaspberryAwards.Core.Model;
+
+public class Producer: EntityBase
 {
-    public class Producer
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public ICollection<MovieProducer> MovieProducers { get; set; } = new List<MovieProducer>();
-    }
+    public string Name { get; set; }
+    public ICollection<MovieProducer> MovieProducers { get; set; } = new List<MovieProducer>();
 }

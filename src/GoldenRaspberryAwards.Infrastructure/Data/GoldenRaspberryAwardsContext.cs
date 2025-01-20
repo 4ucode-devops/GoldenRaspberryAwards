@@ -2,23 +2,22 @@
 using GoldenRaspberryAwards.Infrastructure.Mappings;
 using Microsoft.EntityFrameworkCore;
 
-namespace GoldenRaspberryAwards.Infrastructure.Data
+namespace GoldenRaspberryAwards.Infrastructure.Data;
+
+public class GoldenRaspberryAwardsContext : DbContext
 {
-    public class GoldenRaspberryAwardsContext : DbContext
+    public GoldenRaspberryAwardsContext(DbContextOptions<GoldenRaspberryAwardsContext> options) : base(options) { }
+
+    public DbSet<Movie> Movies { get; set; }
+    public DbSet<Producer> Producers { get; set; }
+    public DbSet<MovieProducer> MovieProducers { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        public GoldenRaspberryAwardsContext(DbContextOptions<GoldenRaspberryAwardsContext> options) : base(options) { }
+        base.OnModelCreating(modelBuilder);
 
-        public DbSet<Movie> Movies { get; set; }
-        public DbSet<Producer> Producers { get; set; }
-        public DbSet<MovieProducer> MovieProducers { get; set; }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-
-            modelBuilder.ApplyConfiguration(new MovieMapping());
-            modelBuilder.ApplyConfiguration(new ProducerMapping());
-            modelBuilder.ApplyConfiguration(new MovieProducerMapping());
-        }
+        modelBuilder.ApplyConfiguration(new MovieMapping());
+        modelBuilder.ApplyConfiguration(new ProducerMapping());
+        modelBuilder.ApplyConfiguration(new MovieProducerMapping());
     }
 }

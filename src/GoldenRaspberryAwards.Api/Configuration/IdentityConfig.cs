@@ -22,7 +22,7 @@ public static class IdentityConfig
     private static void ConfigureDatabase(IServiceCollection services, IConfiguration configuration)
     {
         services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlite("Data Source=GoldenRaspberryAwards.db"));
+            options.UseSqlite(configuration.GetConnectionString("DefaultConnection")));
     }
 
     private static void ConfigureIdentity(IServiceCollection services)

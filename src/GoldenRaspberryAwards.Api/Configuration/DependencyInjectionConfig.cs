@@ -10,6 +10,7 @@ using GoldenRaspberryAwards.CsvDataLoader.Services;
 using GoldenRaspberryAwards.Identity.Extensions;
 using GoldenRaspberryAwards.Identity.Interfaces;
 using GoldenRaspberryAwards.Identity.Services;
+using GoldenRaspberryAwards.Infrastructure.Repositories;
 using GoldenRaspberryAwards.SharedServices.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -54,9 +55,8 @@ public static class DependencyInjectionConfig
         services.TryAddScoped<INotifier, Notifier>();
         services.TryAddScoped<IAspNetUser, AspNetUser>();
         services.TryAddScoped<IAuthService, AuthService>();
-
-        services.TryAddScoped<ICsvProcessorService<Movie>, CsvProcessorService<Movie>>();
-
+        services.TryAddScoped<ICsvProcessorService<Movie>, CsvProcessorService>();
+        services.AddScoped<IMovieRepository, MovieRepository>();
         services.TryAddScoped<RoleManager<IdentityRole>>();
         services.AddAuthorization();
         services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
