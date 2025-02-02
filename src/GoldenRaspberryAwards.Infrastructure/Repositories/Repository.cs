@@ -202,4 +202,19 @@ public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity :
             throw;
         }
     }
+
+
+    public virtual async Task<int> SaveChangesAsync()
+    {
+        try
+        {
+            _notifier.Handle($"Saving changes for {typeof(TEntity).Name}.");
+            return await _dataContext.SaveChangesAsync();
+        }
+        catch (Exception ex)
+        {
+            _notifier.Handle($"Error saving changes for {typeof(TEntity).Name}: {ex.Message}", NotificationType.Error);
+            throw;
+        }
+    }
 }

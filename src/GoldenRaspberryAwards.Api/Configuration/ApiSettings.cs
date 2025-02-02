@@ -34,8 +34,10 @@ public class ApiSettings
 
     private static void ConfigureDatabase(IServiceCollection services, IConfiguration configuration)
     {
+        var connectionString = configuration.GetConnectionString("DefaultConnection");
+
         services.AddDbContext<GoldenRaspberryAwardsContext>(options =>
-            options.UseSqlite("Data Source=GoldenRaspberryAwards.db"));
+            options.UseSqlite(connectionString));
     }
 
     private static void ConfigureControllers(IServiceCollection services)

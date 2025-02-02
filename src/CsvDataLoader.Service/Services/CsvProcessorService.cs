@@ -1,41 +1,49 @@
-﻿using CsvHelper;
+﻿using AutoMapper;
+using CsvHelper;
 using CsvHelper.Configuration;
 using GoldenRaspberryAwards.Core.Interfaces;
 using GoldenRaspberryAwards.Core.Interfaces.Notifications;
+using GoldenRaspberryAwards.Core.Interfaces.Repositories;
 using GoldenRaspberryAwards.Core.Interfaces.Services;
+using GoldenRaspberryAwards.Core.Model;
+using GoldenRaspberryAwards.SharedServices.Services;
 using System.Globalization;
-using System.IO;
 
 namespace GoldenRaspberryAwards.CsvDataLoader.Services
 {
-    public class CsvProcessorService<T> : ICsvProcessorService<T> where T : class
+    public class CsvProcessorService : BaseService, ICsvProcessorService<Movie>
     {
-        private readonly IEntityValidator<T> _validator;
-        private readonly INotifier _notifier;
-        private readonly Func<dynamic, T> _mapper;
+        private readonly IMovieRepository _movieRepository;
+        private readonly IEntityValidator<Movie> _validator;
+        private readonly IMapper _mapper;
 
-        public CsvProcessorService(IEntityValidator<T> validator, INotifier notifier, Func<dynamic, T> mapper)
+        public CsvProcessorService(
+            IMovieRepository movieRepository,
+            IEntityValidator<Movie> validator,
+            INotifier notifier,
+            IMapper mapper) : base(notifier)
         {
+            _movieRepository = movieRepository ?? throw new ArgumentNullException(nameof(movieRepository));
             _validator = validator ?? throw new ArgumentNullException(nameof(validator));
-            _notifier = notifier ?? throw new ArgumentNullException(nameof(notifier));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        public async Task<List<T>> ProcessCsvAsync(string filePath)
+        public async Task<List<Movie>> ProcessCsvAsync(string filePath)
         {
-            if (string.IsNullOrEmpty(filePath))
+            if (string.IsNullOrWhiteSpace(filePath))
             {
                 _notifier.Handle("File path is required.");
-                return new List<T>();
+                return new List<Movie>();
             }
 
             if (!File.Exists(filePath))
             {
                 _notifier.Handle($"File not found at path: {filePath}");
-                return new List<T>();
+                return new List<Movie>();
             }
 
-            var entities = new List<T>();
+            var importedMovies = new List<Movie>();
+
             try
             {
                 using var reader = new StreamReader(filePath);
@@ -45,29 +53,38 @@ namespace GoldenRaspberryAwards.CsvDataLoader.Services
                     HasHeaderRecord = true
                 });
 
-                var records = csv.GetRecordsAsync<dynamic>();
+                var records = csv.GetRecordsAsync<MovieCsv>();
+
                 await foreach (var record in records)
                 {
-                    var entity = _mapper(record);
-                    var validationErrors = _validator.Validate(entity);
+                    var movie = _mapper.Map<Movie>(record);
 
+                    var validationErrors = _validator.Validate(movie);
                     if (validationErrors.Any())
                     {
                         foreach (var error in validationErrors)
                             _notifier.Handle(error);
-
                         continue;
                     }
 
-                    entities.Add(entity);
+                    var existing = await _movieRepository.GetByTitleAndYearAsync(movie.Title, movie.Year);
+                    if (existing != null)
+                    {
+                        continue;
+                    }
+
+                    await _movieRepository.Add(movie);
+                    importedMovies.Add(movie);
                 }
+
+                await _movieRepository.SaveChangesAsync();
             }
             catch (Exception ex)
             {
                 _notifier.Handle($"An error occurred while reading the CSV file: {ex.Message}");
             }
 
-            return entities;
+            return importedMovies;
         }
     }
 }

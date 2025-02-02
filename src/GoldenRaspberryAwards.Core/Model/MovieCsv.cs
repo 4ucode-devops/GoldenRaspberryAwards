@@ -1,10 +1,10 @@
-﻿namespace GoldenRaspberryAwards.Core.Model
+﻿namespace GoldenRaspberryAwards.Core.Model;
+
+public class MovieCsv
 {
-    public class MovieCsv
-    {
-        public int Year { get; set; }
-        public string Title { get; set; }
-        public string Studios { get; set; }
-        public string IsWinner { get; set; } = String.Empty;
-    }
+    public int Year { get; set; }
+    public string Title { get; set; }
+    public string Studios { get; set; }
+    public string Producer { get; set; }
+    public string IsWinner { get; set; } = String.Empty;
 }

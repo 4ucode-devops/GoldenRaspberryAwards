@@ -1,50 +1,37 @@
 ﻿using Asp.Versioning;
-using GoldenRaspberryAwards.Infrastructure.Data;
+using GoldenRaspberryAwards.Core.Interfaces;
+using GoldenRaspberryAwards.Core.Interfaces.Notifications;
+using GoldenRaspberryAwards.Core.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GoldenRaspberryAwards.Api.Controllers.V1;
 
-
 [ApiVersion("1.0")]
 [Route("api/v{version:apiVersion}/movies")]
-public class MoviesController : ControllerBase
+public class MovieController : MainController
 {
-    private readonly GoldenRaspberryAwardsContext _context;
+    private readonly IMovieService _movieService;
 
-    public MoviesController(GoldenRaspberryAwardsContext context)
+    public MovieController(
+        INotifier notifier,
+        IAspNetUser user,
+        IMovieService movieService) : base(notifier, user)
     {
-        _context = context;
+        _movieService = movieService;
     }
 
-    [HttpPost("upload")]
-    public async Task<IActionResult> UploadCsv(IFormFile file)
+    [HttpGet("producers-prize-intervals")]
+    public async Task<IActionResult> GetProducersPrizeIntervals()
     {
-        if (file == null || file.Length == 0)
+        try
         {
-            return BadRequest("No file uploaded.");
+            var result = await _movieService.GetProducersPrizeIntervals();
+            return CustomResponse(result);
         }
-
-        // Processar o arquivo CSV
-        await ProcessCsvAsync(file);
-
-        return Ok("File uploaded and data processed successfully.");
-    }
-
-    private async Task ProcessCsvAsync(IFormFile file)
-    {
-        using (var stream = new MemoryStream())
+        catch (Exception ex)
         {
-            await file.CopyToAsync(stream);
-            stream.Position = 0;
-
-            //var csvProcessor = new CsvProcessor<Movie, CsvMovie>(/* validador e notificador */);
-            //var movies = await csvProcessor.ProcessCsvAsync(stream);
-
-            //if (movies.Any())
-            //{
-            //    _context.Movies.AddRange(movies);
-            //    await _context.SaveChangesAsync();
-            //}
+            NotifyError(ex.Message);
+            return CustomResponse();
         }
     }
 }
