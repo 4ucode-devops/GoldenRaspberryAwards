@@ -18,66 +18,74 @@ public class MovieService : BaseService, IMovieService
 
     public async Task<object> GetProducersPrizeIntervals()
     {
-        var movies = await _movieRepository.GetAll();
-
-        var producersPrizeData = movies
-            .Where(m => m.IsWinner.Equals("yes", StringComparison.OrdinalIgnoreCase))
-            .SelectMany(m => m.MovieProducers, (movie, producer) => new
-            {
-                producer = producer.Producer.Name,
-                year = movie.Year
-            })
-            .GroupBy(p => p.producer)
-            .Select(g => new
-            {
-                producer = g.Key,
-                wins = g.OrderBy(x => x.year).ToList()
-            })
-            .ToList();
-
-        var min = new List<object>();
-        var max = new List<object>();
-
-        foreach (var producerData in producersPrizeData)
+        try
         {
-            var wins = producerData.wins;
+            var movies = await _movieRepository.GetAll();
 
-            for (int i = 1; i < wins.Count; i++)
+            var producersPrizeData = movies
+                .Where(m => m.IsWinner.Equals("yes", StringComparison.OrdinalIgnoreCase))
+                .SelectMany(m => m.MovieProducers, (movie, producer) => new
+                {
+                    producer = producer.Producer.Name,
+                    year = movie.Year
+                })
+                .GroupBy(p => p.producer)
+                .Select(g => new
+                {
+                    producer = g.Key,
+                    wins = g.OrderBy(x => x.year).ToList()
+                })
+                .ToList();
+
+            var min = new List<object>();
+            var max = new List<object>();
+
+            foreach (var producerData in producersPrizeData)
             {
-                var previousWin = wins[i - 1].year;
-                var followingWin = wins[i].year;
-                var interval = followingWin - previousWin;
+                var wins = producerData.wins;
 
-                if (min.Count == 0 || interval < (int)min[0].GetType().GetProperty("interval").GetValue(min[0]))
+                for (int i = 1; i < wins.Count; i++)
                 {
-                    min.Clear();
-                    min.Add(new
-                    {
-                        producer = producerData.producer,
-                        interval,
-                        previousWin,
-                        followingWin
-                    });
-                }
+                    var previousWin = wins[i - 1].year;
+                    var followingWin = wins[i].year;
+                    var interval = followingWin - previousWin;
 
-                if (max.Count == 0 || interval > (int)max[0].GetType().GetProperty("interval").GetValue(max[0]))
-                {
-                    max.Clear();
-                    max.Add(new
+                    if (min.Count == 0 || interval < (int)min[0].GetType().GetProperty("interval").GetValue(min[0]))
                     {
-                        producer = producerData.producer,
-                        interval,
-                        previousWin,
-                        followingWin
-                    });
+                        min.Clear();
+                        min.Add(new
+                        {
+                            producer = producerData.producer,
+                            interval,
+                            previousWin,
+                            followingWin
+                        });
+                    }
+
+                    if (max.Count == 0 || interval > (int)max[0].GetType().GetProperty("interval").GetValue(max[0]))
+                    {
+                        max.Clear();
+                        max.Add(new
+                        {
+                            producer = producerData.producer,
+                            interval,
+                            previousWin,
+                            followingWin
+                        });
+                    }
                 }
             }
-        }
 
-        return new
+            return new
+            {
+                min,
+                max
+            };
+        }
+        catch (Exception ex)
         {
-            min,
-            max
-        };
+            HandleException(ex);
+            throw;
+        }
     }
 }

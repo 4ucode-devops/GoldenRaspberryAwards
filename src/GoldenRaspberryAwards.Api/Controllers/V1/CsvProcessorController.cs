@@ -28,11 +28,11 @@ public class CsvProcessorController : MainController
 
     [HttpPost("csv")]
     [Consumes("multipart/form-data")]
-    public async Task<IActionResult> ProcessCsv(CsvUploadInput input)
+    public async Task<IActionResult> ProcessCsv([FromForm] CsvUploadInput input)
     {
         if (input.File == null || input.File.Length == 0)
         {
-            NotifyError("Arquivo CSV é obrigatório.");
+            NotifyError("Error: Arquivo CSV é obrigatório.");
             return CustomResponse();
         }
 
