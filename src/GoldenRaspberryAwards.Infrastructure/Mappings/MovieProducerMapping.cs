@@ -12,11 +12,13 @@ namespace GoldenRaspberryAwards.Infrastructure.Mappings
 
             builder.HasOne(mp => mp.Movie)
                    .WithMany(m => m.MovieProducers)
-                   .HasForeignKey(mp => mp.MovieId);
+                   .HasForeignKey(mp => mp.MovieId)
+                   .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne(mp => mp.Producer)
                    .WithMany(p => p.MovieProducers)
-                   .HasForeignKey(mp => mp.ProducerId);
+                   .HasForeignKey(mp => mp.ProducerId)
+                   .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
